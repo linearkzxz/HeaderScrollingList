@@ -6,9 +6,9 @@ export default class App extends Component {
     super(props)
     this.initHeaderHeight = 130
     this.state = {
+      listData: Array.apply(null, { length: 100 }).map(Number.call, Number),
       headerHeight: this.initHeaderHeight,
       bodyHeight: Dimensions.get('window').height - this.initHeaderHeight * 2,
-      footerHeight: this.initHeaderHeight,
     }
   }
 
@@ -35,17 +35,15 @@ export default class App extends Component {
     const newHeaderHeight = this.initHeaderHeight - scrollContentOffsetY / 6.5
     this.setState({
       headerHeight: newHeaderHeight >= 0 ? newHeaderHeight : 0,
-      footerHeight: newHeaderHeight >= 0 ? newHeaderHeight : 0,
     })
   }
 
   render() {
-    const listData = [...Array(100).keys()]
     return (
       <View style={styles.container}>
         <View style={{ flex: 1 }}>
           <FlatList
-            data={listData}
+            data={this.state.listData}
             keyExtractor={this.keyExtractor}
             renderItem={this.renderItem}
             onScroll={this.handleScroll}
